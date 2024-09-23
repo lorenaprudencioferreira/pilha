@@ -1,0 +1,54 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include "Pilha.h"
+#include <cstring>
+
+using namespace std;
+
+bool fechou(char abertura, char fechamento) {  // verifica se os caracteres formam o par correspondente
+    return (abertura == '(' && fechamento == ')') || (abertura == '[' && fechamento == ']');
+}
+
+bool validarExpressao(char expressao[]) {  // valida a expressao usando a pilha
+    Pilha_Construtor();
+
+    int tamanho = strlen(expressao); // calcular o tamanho da expressao
+
+    for(int i = 0; i < tamanho; i++) {
+        char caractere = expressao[i];
+
+        if (caractere == '(' || caractere == '[') { // se o caractere eh abertura, empilha
+            Pilha_Empilhar(caractere); // chama funcao empilhar e empilha parenteses ou colchetes
+        }
+        // se eh fechamento, tenta desempilhar e ver se eh par valido
+        else if (caractere == ')' || caractere == ']') {
+            char topo;
+
+            if (Pilha_Vazia() || !Pilha_Desempilhar(topo) || !fechou(topo, caractere)) {
+                Pilha_Destrutor(); // liberar memoria da pilha
+                return false; // invalida
+            }
+        }
+    }
+    bool expressaoValida = Pilha_Vazia(); // ve se todos os pares foram fechados
+    Pilha_Destrutor();
+    return expressaoValida;
+}
+
+int main()
+{
+    char expressao[50];  // array de char de 50 posicoes
+
+    cout << "Digite a expressao matematica: " << endl;
+    cin.getline(expressao, 50);  // pega toda a expressao incluindo espacos, se quiser dar espaco
+
+    if(validarExpressao(expressao)) {
+        cout << "OK" << endl;
+    }
+    else {
+        cout << "Errado" << endl;
+    }
+
+    return 0;
+}
