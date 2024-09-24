@@ -16,14 +16,14 @@ bool validarExpressao(char expressao[]) {  // valida a expressao usando a pilha
     int tamanho = strlen(expressao); // calcular o tamanho da expressao
 
     for(int i = 0; i < tamanho; i++) {
-        char caractere = expressao[i];
+        char caractere = expressao[i]; 
 
         if (caractere == '(' || caractere == '[') { // se o caractere eh abertura, empilha
             Pilha_Empilhar(caractere); // chama funcao empilhar e empilha parenteses ou colchetes
         }
         // se eh fechamento, tenta desempilhar e ver se eh par valido
         else if (caractere == ')' || caractere == ']') {
-            char topo;
+            char topo;  // declara a variavel topo para armazenar o caractere do topo da pilha
 
             if (Pilha_Vazia() || !Pilha_Desempilhar(topo) || !fechou(topo, caractere)) {
                 Pilha_Destrutor(); // liberar memoria da pilha
